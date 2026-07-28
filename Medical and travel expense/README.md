@@ -1,89 +1,306 @@
-# WCB Medical & Travel Expense Request — Pure Front-End (HTML/CSS/JS/Pug)
+# 📄 WCB Medical & Travel Expense Request
+### Pure Front-End | HTML • CSS • JavaScript • Pug
 
-No Node.js server, no Express — this runs entirely in the browser as
-static files.
+A fully front-end implementation of the **WCB Medical & Travel Expense Request** form that recreates the original PDF layout using **HTML, CSS, JavaScript, and Pug**.
 
-## Project Structure
+This project requires **no Node.js, Express, or backend server** at runtime. Everything is rendered directly in the browser using a precompiled Pug template and simulated backend datasets.
+
+---
+
+## ✨ Features
+
+- 📋 Pixel-friendly layout matching the original WCB form
+- 🎨 Built with reusable **Pug Mixins**
+- 🔄 Dynamic rendering using multiple datasets
+- 📄 Print-ready A4 layout with automatic page breaks
+- 🖨️ Save directly as PDF from the browser
+- 🚫 No backend required
+- ⚡ Runs entirely as static files
+
+---
+
+# 📁 Project Structure
 
 ```
 wcb-form-static/
-├── index.html                # Entry point — open this in a browser
+│
+├── index.html
+│   └── Application entry point
+│
 ├── css/
-│   └── style.css             # Layout matching the PDF + print/A4 pagination
+│   └── style.css
+│       ├── Complete page styling
+│       ├── Print layout
+│       └── A4 pagination
+│
 ├── images/
 │   └── logo.jpeg
+│
 ├── pug/
-│   ├── expense-form.pug      # SOURCE template (readable Pug, for reference/grading)
-│   └── mixins.pug            # Reusable mixins: docHeader, dataTable, expenseSection, pageFooter
+│   ├── expense-form.pug
+│   │   └── Main template source
+│   │
+│   └── mixins.pug
+│       └── Reusable Pug mixins
+│
 └── js/
-    ├── pug-templates.js      # expense-form.pug PRECOMPILED to a plain JS function
+    ├── pug-templates.js
+    │   └── Precompiled browser-ready template
+    │
     ├── data/
-    │   ├── dataset1.js       # Simulated backend record #1 (matches the sample PDF)
-    │   └── dataset2.js       # Simulated backend record #2 (different claim/values)
-    └── main.js                # Wires data → template, handles the dataset switcher
+    │   ├── dataset1.js
+    │   └── dataset2.js
+    │
+    └── main.js
+        └── Handles rendering & dataset switching
 ```
-## Demo link
+
+---
+
+# 🎥 Project Demo
+
+📹 **Demo Video**
+
 https://drive.google.com/file/d/1m_Bm4Wm_7X0IyT0K9SyHQC5nOToaRi41/view?usp=drive_link
 
-## Why there's a `.pug` folder AND a `pug-templates.js` file
+---
 
-The assignment requires using Pug to render the page. Pug templates
-aren't something a browser can read directly — they need to be
-compiled to JavaScript first. Normally that compile step happens on a
-Node/Express server on every request. Since you asked for **no
-Node/Express**, that compile step was instead run **once, ahead of
-time**, producing `js/pug-templates.js`: a plain, self-contained
-JavaScript function with zero Node dependencies. `index.html` loads
-that file with an ordinary `<script>` tag and calls it directly in the
-browser — the same way you'd load any other JS file.
+# 🛠️ Technologies Used
 
-`pug/expense-form.pug` and `pug/mixins.pug` are kept in the project as
-the readable **source** — they show the actual Pug template and the
-reusable mixins (`docHeader`, `sectionTitle`, `dataTable`,
-`expenseSection`, `pageFooter`) that `pug-templates.js` was generated
-from.
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- Pug Template Engine
+- Browser Print API
 
-If you ever need to change the template's structure (not just the
-data), edit the `.pug` files and recompile with:
+---
+
+# 💡 Why Are There Both `.pug` Files and `pug-templates.js`?
+
+Pug is a template engine—it isn't understood directly by web browsers.
+
+Normally:
+
+```
+Pug
+   ↓
+Node.js / Express
+   ↓
+HTML
+```
+
+Since this project is designed to run **without any backend**, the Pug template was **compiled only once** into a plain JavaScript rendering function.
+
+That generated file is:
+
+```
+js/pug-templates.js
+```
+
+This allows the browser to render the page without needing Node.js or Express.
+
+The original Pug files are still included because they:
+
+- demonstrate the actual template source
+- showcase reusable mixins
+- satisfy assignment requirements
+- make future template modifications much easier
+
+---
+
+# 🧩 Reusable Pug Mixins
+
+The project is organized using reusable mixins to keep the template clean and maintainable.
+
+Included mixins:
+
+- `docHeader`
+- `sectionTitle`
+- `dataTable`
+- `expenseSection`
+- `pageFooter`
+
+These components eliminate duplicate markup while improving readability.
+
+---
+
+# 🔨 Recompiling the Template (Optional)
+
+If you modify the Pug template, regenerate the JavaScript renderer using:
 
 ```bash
 npx pug-cli --client --no-debug -O js/pug-templates.js pug/expense-form.pug
 ```
-(or use `pug.compileFileClient()` from the `pug` npm package — this is
-a one-time build step, not something the running page needs.)
 
-## Running it
+or
 
-Just open `index.html` in a browser — no install, no server.
-(Some browsers restrict `file://` script loading; if the switcher or
-tables don't appear, serve the folder with any static server, e.g.
-`npx serve .` or the VS Code "Live Server" extension.)
+```javascript
+pug.compileFileClient()
+```
 
-## Switching datasets
+> This is a **one-time build step** only.
+>
+> The running application never depends on Node.js.
 
-`js/data/dataset1.js` and `js/data/dataset2.js` each attach a plain
-object to `window` (`WCB_DATASET_1` / `WCB_DATASET_2`) — this stands
-in for "data coming from the backend." Click **Dataset 1** / **Dataset
-2** in the on-screen bar at the top (hidden when printed) to re-render
-the same template with the other object — no page reload, no server
-call, just `js/main.js` calling `renderExpenseForm()` again with a
-different `claim` object.
+---
 
-**To change the data:** edit either `dataset1.js` or `dataset2.js` (or
-add `dataset3.js` + one line in `main.js`). Nothing in `index.html` or
-the template needs to change — the UI updates because the template is
-fully data-driven.
+# ▶️ Running the Project
 
-## Printing to PDF
+No installation is required.
 
-Click **Print / Save as PDF** in the switcher bar (or Ctrl/Cmd+P). The
-page is styled for A4 (`@page { size: A4; }` in `style.css`), and the
-footer (Worker App ID, Submitted date) switches to `position: fixed`
-in the print stylesheet — standard browsers (Chrome, Edge, Firefox)
-repeat fixed-position elements on every physical printed page
-automatically, so the footer stays correctly placed regardless of how
-many pages a given dataset's tables end up spanning. This uses plain
-CSS only — no external library or CDN dependency, so nothing can
-interfere with the normal on-screen view.
+Simply open:
 
+```
+index.html
+```
 
+inside any modern browser.
+
+### If your browser blocks `file://` scripts
+
+Serve the folder using a lightweight static server.
+
+Using npm:
+
+```bash
+npx serve .
+```
+
+or use the **Live Server** extension in Visual Studio Code.
+
+---
+
+# 🔄 Switching Between Datasets
+
+The project includes two simulated backend records:
+
+```
+dataset1.js
+dataset2.js
+```
+
+Each file exposes a JavaScript object:
+
+```
+window.WCB_DATASET_1
+window.WCB_DATASET_2
+```
+
+Use the **Dataset 1** and **Dataset 2** buttons at the top of the page to instantly re-render the form.
+
+No:
+
+- page refresh
+- backend call
+- API request
+
+The UI updates entirely in the browser by passing a different object into the same Pug template.
+
+---
+
+# ✏️ Adding or Editing Data
+
+Updating the displayed information is simple.
+
+### Edit an existing dataset
+
+```
+js/data/dataset1.js
+```
+
+or
+
+```
+js/data/dataset2.js
+```
+
+### Add another dataset
+
+1. Create
+
+```
+dataset3.js
+```
+
+2. Register it inside
+
+```
+main.js
+```
+
+No changes are needed in:
+
+- HTML
+- CSS
+- Pug Template
+
+The application is completely data-driven.
+
+---
+
+# 🖨️ Printing & Exporting to PDF
+
+Click
+
+```
+Print / Save as PDF
+```
+
+or simply press
+
+```
+Ctrl + P
+```
+
+The layout has been optimized for:
+
+- A4 paper
+- clean page breaks
+- repeating footer
+- browser-native PDF generation
+
+The footer (Worker App ID and Submitted Date) uses fixed positioning during printing, ensuring it appears correctly on every printed page.
+
+Everything is achieved using **pure CSS**—no external libraries or third-party dependencies are required.
+
+---
+
+# 🎯 Project Highlights
+
+✔ Pure Front-End Architecture
+
+✔ Browser-Only Rendering
+
+✔ Reusable Pug Components
+
+✔ Dynamic Data Binding
+
+✔ Static Deployment Ready
+
+✔ Responsive Layout
+
+✔ Print-Friendly Design
+
+✔ No Backend Dependencies
+
+✔ Easy to Extend
+
+✔ Clean Project Structure
+
+---
+
+# 📌 Notes
+
+- The application simulates backend responses using local JavaScript datasets.
+- Rendering is performed by a precompiled Pug template.
+- No frameworks or server-side technologies are required at runtime.
+- The project can be hosted on any static hosting platform such as GitHub Pages, Netlify, or Vercel.
+
+---
+
+## 👨‍💻 Author
+Yashasvi N Sontakki
+
+**Developed as part of the WCB Medical & Travel Expense Request assignment**
+
+Designed using **HTML, CSS, JavaScript, and Pug** with a focus on clean architecture, maintainability, and browser-only execution.
