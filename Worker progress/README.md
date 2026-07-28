@@ -38,9 +38,9 @@ https://drive.google.com/file/d/1TVaW-wrOLagPUXVLhhikYd1PkipFqMlc/view?usp=drive
   configured for standard A4 paper. Chrome/Edge → "Save as PDF" produces a
   clean, correctly paginated document.
 
-## Architecture
+## Structure 
 
-``
+```
 ├── index.html
 ├── css/
 │   ├── style.css
@@ -58,7 +58,7 @@ https://drive.google.com/file/d/1TVaW-wrOLagPUXVLhhikYd1PkipFqMlc/view?usp=drive
 │   └── embed-templates.js
 └── assets/
     └── logo.jpeg
-``
+```
 ### "Use Pug Template to render the page"
 
 `pug/mixins.pug` and `pug/blocks.pug` are the real, authored Pug source —
