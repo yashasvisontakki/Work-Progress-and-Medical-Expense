@@ -23,7 +23,8 @@ python3 -m http.server 8000      # then open http://localhost:8000
 ```
 ## DEMO LINK 
 https://drive.google.com/file/d/1TVaW-wrOLagPUXVLhhikYd1PkipFqMlc/view?usp=drive_link
-
+## Snapshots
+1."C:\Users\Yashasvi N S\OneDrive\Pictures\Screenshots\Screenshot 2026-07-28 152559.png"
 ## Using it
 
 - The blue toolbar at the top lets you **switch between two simulated
