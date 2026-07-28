@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Worker Progress Report &ndash; WCB Manitoba</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/print.css" />
+</head>
+<body>
+  
+
+  <!-- Screen-only controls: switch datasets, or print/export to A4 PDF.
+       Hidden entirely in print media (see print.css). -->
+  <div class="wcb-toolbar">
+    <label for="dataset-select">Simulated backend data:</label>
+    <select id="dataset-select" aria-label="Choose simulated dataset"></select>
+    <button type="button" id="print-btn">Print / Save as PDF</button>
+    <span class="wcb-toolbar__hint">Page count adjusts automatically to the data.</span>
+  </div>
+
+  <!-- Rendered pages are injected here by paginate.js -->
+  <main id="app"></main>
+
+  <!-- Browser build of the Pug template engine (historically distributed
+       under Pug's original package name, "jade"; same engine, same API:
+       jade.compile / jade.render). This is what turns the .pug source in
+       /pug into the HTML you see above, entirely client-side. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jade/1.11.0/jade.js"></script>
+
+  <!-- Simulated backend payloads -->
+  <script src="js/datasets.js"></script>
+
+  <!-- Exact copy of pug/mixins.pug + pug/blocks.pug, embedded as strings so
+       the page still works when opened directly as a file:// document
+       (browsers block fetch() of local files without a server). Used only
+       as a fallback - see pug-loader.js. -->
+  <script src="js/templates-inline.js"></script>
+
+  <script src="js/pug-loader.js"></script>
+  <script src="js/paginate.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
