@@ -64,7 +64,14 @@ wcb-form-static/
 https://drive.google.com/file/d/1m_Bm4Wm_7X0IyT0K9SyHQC5nOToaRi41/view?usp=drive_link
 
 ---
+# Snapshots
+<img width="2822" height="1466" alt="Screenshot 2026-07-28 152559" src="https://github.com/user-attachments/assets/3ebdb755-f3ba-498f-9c38-6fa21cafde86" />
+<img width="2862" height="1352" alt="Screenshot 2026-07-28 152621" src="https://github.com/user-attachments/assets/0a605f20-4852-4a0c-b40b-9d269d1244eb" />
+<img width="2832" height="1448" alt="Screenshot 2026-07-28 152633" src="https://github.com/user-attachments/assets/48967bc3-851a-49f4-8ecf-f077826a5611" />
+<img width="2626" height="1474" alt="Screenshot 2026-07-28 152648" src="https://github.com/user-attachments/assets/d1301d65-7439-4832-80b4-c2216cceaafb" />
+<img width="2612" height="1428" alt="Screenshot 2026-07-28 152707" src="https://github.com/user-attachments/assets/403f207f-c35c-4c98-8e62-d96a9ab06d29" />
 
+---
 # 🛠️ Technologies Used
 
 - HTML5
