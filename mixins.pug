@@ -1,0 +1,82 @@
+//- =========================================================
+//- mixins.pug
+//- Reusable, low-level building blocks shared by every form
+//- block in blocks.pug. Keeping them here means the visual
+//- language of the WCB form (boxes, checkboxes, underlines)
+//- is defined exactly once and reused everywhere.
+//- =========================================================
+
+//- A single square checkbox + its label. `checked` toggles the tick mark.
+mixin checkbox(label, checked)
+  label.wcb-checkbox
+    span.wcb-checkbox__box(class=checked ? 'is-checked' : '')
+      if checked
+        svg.wcb-checkbox__tick(viewBox="0 0 16 16")
+          path(d="M2 8.5 L6 12.5 L14 3.5")
+    span.wcb-checkbox__label= label
+
+//- A row of one-or-more checkboxes. `items` is [{label, checked}, ...]
+mixin checkboxRow(items)
+  .wcb-checkbox-row
+    each item in items
+      +checkbox(item.label, item.checked)
+
+//- A bordered box used to group a "select one" style question.
+//- Pass an optional caption (small grey text, e.g. "Select one:")
+mixin optionBox(caption)
+  .wcb-box
+    if caption
+      .wcb-box__caption= caption
+    block
+
+//- A bordered box for free-text answers (concerns, comments, etc.)
+//- Falls back to an italic placeholder when the field was left blank,
+//- exactly like the source WCB paper form does.
+mixin textBox(text)
+  .wcb-box.wcb-box--text
+    if text
+      p.wcb-box__text= text
+    else
+      p.wcb-box__text.wcb-box__text--empty (No response provided)
+
+//- A single "label ______ value" underlined line, e.g. a date field.
+mixin underlineField(label, value)
+  .wcb-underline-field
+    span.wcb-underline-field__value= value || '\u00A0'
+    span.wcb-underline-field__label= label
+
+//- Section heading, e.g. "Return to Work" / "Recovery" / "Medical Treatment"
+mixin sectionHeading(text)
+  h2.wcb-section-heading= text
+
+//- The repeating page header: logo, address block, form title and the
+//- Claim No. / form-code boxes. Rendered identically on every page so
+//- that a printed / re-scanned page is self-identifying on its own.
+mixin pageHeader(claimNo, formCode, formTitle)
+  header.wcb-header
+    .wcb-header__brand
+      img.wcb-header__logo(src="assets/logo.jpeg" alt="Workers Compensation Board of Manitoba logo")
+    .wcb-header__address
+      p 333 Broadway
+      p Winnipeg, MB R3C 4W3
+      p Phone: (204) 954-4321
+      p Toll Free: 1-855-954-4321
+      p wcb.mb.ca
+    .wcb-header__title-block
+      h1.wcb-header__title= formTitle
+      .wcb-header__id-boxes
+        .wcb-id-box
+          span.wcb-id-box__label Claim No.
+          span.wcb-id-box__value= claimNo
+        .wcb-id-box.wcb-id-box--code
+          span.wcb-id-box__value= formCode
+
+//- The repeating page footer: worker app id + submission timestamp on the
+//- left, page X of Y on the right. `totalPages` is filled in at render
+//- time by paginate.js once the real number of pages is known, so the
+//- footer always matches however much data the current dataset produced.
+mixin pageFooter(appId, submitted, pageNumber, totalPages)
+  footer.wcb-footer
+    span.wcb-footer__app-id Worker App ID: #{appId}
+    span.wcb-footer__submitted Submitted: #{submitted}
+    span.wcb-footer__page Page #{pageNumber} of #{totalPages}

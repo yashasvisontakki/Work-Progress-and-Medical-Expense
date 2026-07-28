@@ -1,0 +1,51 @@
+/* =========================================================
+   print.css
+   Rules that only apply when printing / exporting to PDF.
+   paginate.js already split the content into A4-sized
+   .wcb-page containers on screen, so printing mostly just
+   means: hide chrome, drop the shadow, and make sure each
+   .wcb-page starts on its own sheet.
+   ========================================================= */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html, body {
+    background: #fff;
+  }
+
+  .wcb-toolbar,
+  .wcb-toolbar * {
+    display: none !important;
+  }
+
+  #app {
+    padding: 0;
+    gap: 0;
+  }
+
+  .wcb-page {
+    box-shadow: none;
+    margin: 0;
+    width: 210mm;
+    min-height: 297mm;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .wcb-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* Never let a box/checkbox group split across two printed pages */
+  .wcb-block,
+  .wcb-box,
+  .wcb-checkbox-row {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

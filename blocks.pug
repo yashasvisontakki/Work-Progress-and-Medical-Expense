@@ -1,0 +1,149 @@
+//- =========================================================
+//- blocks.pug
+//- One mixin per logical content block on the Worker Progress
+//- Report. paginate.js renders each of these into a hidden
+//- measuring area and then distributes them across as many
+//- physical "pages" as the current dataset actually needs -
+//- so a short answer set prints on 3 pages (as the source PDF
+//- does) while a dataset with longer free-text answers is
+//- free to spill onto a 4th page without breaking the footer.
+//- =========================================================
+include mixins.pug
+
+mixin blockIntro(data)
+  .wcb-block
+    p.wcb-intro
+      strong= data.workerName
+      |  provided the following updates in relation to their claim:
+
+mixin blockReturnToWork(data)
+  .wcb-block
+    +sectionHeading('Return to Work')
+    +optionBox('Select one:')
+      .wcb-checkbox-row
+        +checkbox('I have not missed time from work', data.returnToWork.status === 'notMissed')
+        +checkbox('I have not returned to work', data.returnToWork.status === 'notReturned')
+        span.wcb-checkbox-inline
+          +checkbox('I returned to work on:', data.returnToWork.status === 'returned')
+          span.wcb-checkbox-inline__value= data.returnToWork.returnDate || '\u00A0'
+
+mixin blockWorkingStatus(data)
+  .wcb-block
+    +optionBox('I am working:')
+      .wcb-checkbox-row
+        +checkbox('Full duties, regular hours', data.workingStatus.type === 'fullRegular')
+        +checkbox('Full duties, reduced hours', data.workingStatus.type === 'fullReduced')
+        +checkbox('Modified duties, regular hours', data.workingStatus.type === 'modifiedRegular')
+        +checkbox('Modified duties, reduced hours', data.workingStatus.type === 'modifiedReduced')
+      .wcb-checkbox-row
+        span.wcb-checkbox-inline
+          +checkbox('Other:', data.workingStatus.type === 'other')
+          span.wcb-checkbox-inline__value.wcb-checkbox-inline__value--wide= data.workingStatus.otherText || '\u00A0'
+
+mixin blockRtwGoing(data)
+  .wcb-block
+    p.wcb-prompt My return to work is going:
+    +textBox(data.rtwGoingComment)
+
+mixin blockExpectDate(data)
+  .wcb-block.wcb-block--inline
+    span.wcb-inline-prefix I expect to return to work on:
+    +underlineField('Date', data.expectedReturnDate)
+
+mixin blockConcerns(data)
+  .wcb-block
+    p.wcb-prompt I have the following concerns about returning to work:
+    +textBox(data.concerns)
+
+mixin blockContact(data)
+  .wcb-block.wcb-block--contact
+    span.wcb-inline-prefix I was most recently in contact with:
+    +underlineField('(Name of employer contact)', data.lastContact.name)
+    span.wcb-inline-mid on
+    +underlineField('Date', data.lastContact.date)
+
+mixin blockRecovery(data)
+  .wcb-block
+    +sectionHeading('Recovery')
+    +optionBox('Select one:')
+      .wcb-checkbox-row
+        +checkbox('I have not fully recovered from my workplace injury.', data.recovery.status === 'notRecovered')
+        +checkbox('I have fully recovered from my workplace injury.', data.recovery.status === 'recovered')
+
+mixin blockRecoveryComments(data)
+  .wcb-block
+    p.wcb-prompt I have provided the following comments about my recovery:
+    +textBox(data.recovery.comments)
+
+mixin blockPainScale(data)
+  .wcb-block
+    p.wcb-prompt I rate my current pain/discomfort on a scale of 1-10, where 1 is no pain and 10 is severe pain out of 10.
+    .wcb-pain-scale
+      each n in [1,2,3,4,5,6,7,8,9,10]
+        span.wcb-pain-scale__num(class=data.painScale === n ? 'is-selected' : '')= n
+
+mixin blockMedicalTreatment(data)
+  .wcb-block
+    +optionBox('Select one:')
+      .wcb-checkbox-row
+        +checkbox('I am not continuing to receive medical treatment for my workplace injury.', data.medicalTreatment.status === 'notContinuing')
+        span.wcb-checkbox-inline
+          +checkbox('I am continuing to receive medical treatment for my workplace injury from:', data.medicalTreatment.status === 'continuing')
+          span.wcb-checkbox-inline__value= data.medicalTreatment.providerType || '\u00A0'
+          span.wcb-checkbox-inline__caption (Medical Provider Type)
+    .wcb-block--inline
+      span.wcb-inline-prefix My last medical treatment was from
+      +underlineField('Date', data.medicalTreatment.lastTreatmentDate)
+      +underlineField('(Medical Provider Name)', data.medicalTreatment.lastProviderName)
+    .wcb-block--inline
+      span.wcb-inline-prefix My next medical treatment is from
+      +underlineField('Date', data.medicalTreatment.nextTreatmentDate)
+      +underlineField('(Medical Provider Name)', data.medicalTreatment.nextProviderName)
+    if data.medicalTreatment.chiroFrequency
+      .wcb-note
+        span I am attending a Chiropractor or Physiotherapist
+        +underlineField('(Frequency)', data.medicalTreatment.chiroFrequency)
+
+mixin blockMedication(data)
+  .wcb-block
+    +optionBox('Select one:')
+      .wcb-checkbox-row
+        +checkbox('I am not taking medication for my workplace injury.', data.medication.status === 'notTaking')
+        span.wcb-checkbox-inline
+          +checkbox('I am taking medication for my workplace injury:', data.medication.status === 'taking')
+          span.wcb-checkbox-inline__value= data.medication.name || '\u00A0'
+          span.wcb-checkbox-inline__caption (Name of prescribed medication)
+
+mixin blockHomeExercise(data)
+  .wcb-block
+    +optionBox('Select one:')
+      .wcb-checkbox-row
+        +checkbox('I am not doing home exercises for my workplace injury.', data.homeExercise.status === 'notDoing')
+        +checkbox('I am doing home exercises for my workplace injury.', data.homeExercise.status === 'doing')
+    if data.homeExercise.status === 'doing'
+      p.wcb-prompt List the exercises you are doing:
+      if data.homeExercise.exercises && data.homeExercise.exercises.length
+        ul.wcb-exercise-list
+          each ex in data.homeExercise.exercises
+            li= ex
+      else
+        +textBox(null)
+
+mixin blockOtherInfo(data)
+  .wcb-block
+    +sectionHeading('Other Information')
+    p.wcb-prompt I would like to provide the following additional information about my claim/injury:
+    +textBox(data.otherInfo)
+
+mixin blockCertification(data)
+  .wcb-block
+    p.wcb-certification
+      | I certify that the information given on this form is true, correct and complete to the best of my
+      |  knowledge. I agree to notify the Workers Compensation Board of Manitoba (WCB) immediately once I
+      |  return to any form of work and/or employment. I understand that it is an offence to knowingly make
+      |  a false statement to the WCB. I also understand that it is an offence to withhold information from
+      |  WCB which affects my entitlement to compensation (e.g., full or partial recovery from injury, ability to
+      |  return to work, sources of additional income, etc.). I understand that refusing to co-operate with, or
+      |  follow my treatment, may result in the WCB reducing or suspending my benefits.
+    p.wcb-certification
+      | I understand that the Privacy Notice applies to the personal information collected in this document.

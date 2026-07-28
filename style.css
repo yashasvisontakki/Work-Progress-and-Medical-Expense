@@ -1,0 +1,253 @@
+/* =========================================================
+   style.css
+   Visual language for the WCB Worker Progress Report.
+   Shared by every page produced by paginate.js — colours,
+   box borders, checkbox shape and typography all live here
+   once so pages never drift out of sync with each other.
+   ========================================================= */
+
+:root {
+  --wcb-blue: #1c3f66;
+  --wcb-border: #1a1a1a;
+  --wcb-grey-caption: #4a4a4a;
+  --wcb-page-bg: #e9e9e9;
+  --wcb-paper-bg: #ffffff;
+  --page-width: 210mm;
+  --page-height: 297mm;
+  --page-padding: 14mm 14mm 20mm 14mm;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--wcb-page-bg);
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: #111;
+}
+
+/* ---------- Toolbar (screen only, hidden on print) ---------- */
+.wcb-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background: var(--wcb-blue);
+  color: #fff;
+  font-size: 14px;
+}
+.wcb-toolbar label { font-weight: 600; margin-right: 6px; }
+.wcb-toolbar select,
+.wcb-toolbar button {
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+.wcb-toolbar select { background: #fff; color: #111; }
+.wcb-toolbar button {
+  background: #ffffff;
+  color: var(--wcb-blue);
+  font-weight: 600;
+}
+.wcb-toolbar button:hover { background: #dbe6f2; }
+.wcb-toolbar__hint { opacity: 0.85; font-size: 12.5px; margin-left: auto; }
+
+/* ---------- Page shell ---------- */
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0 60px;
+}
+
+.wcb-page {
+  position: relative;
+  width: var(--page-width);
+  min-height: var(--page-height);
+  background: var(--wcb-paper-bg);
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+  padding: var(--page-padding);
+  display: flex;
+  flex-direction: column;
+}
+
+.wcb-page__content {
+  flex: 1 1 auto;
+}
+
+/* ---------- Header ---------- */
+.wcb-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: start;
+  border-bottom: 2px solid var(--wcb-blue);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+.wcb-header__logo { height: 46px; display: block; }
+.wcb-header__address {
+  font-size: 11px;
+  line-height: 1.35;
+  color: #222;
+}
+.wcb-header__address p { margin: 0; }
+.wcb-header__title-block { text-align: right; }
+.wcb-header__title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 2px 0 8px;
+  color: #111;
+}
+.wcb-header__id-boxes { display: flex; gap: 8px; justify-content: flex-end; }
+.wcb-id-box {
+  border: 1.5px solid var(--wcb-border);
+  border-radius: 2px;
+  padding: 4px 8px;
+  font-size: 12px;
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+.wcb-id-box__label { color: #333; }
+.wcb-id-box__value { font-weight: 600; }
+.wcb-id-box--code { justify-content: center; }
+
+/* ---------- Footer ---------- */
+.wcb-footer {
+  border-top: 1px solid #999;
+  margin-top: 14px;
+  padding-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #333;
+}
+.wcb-footer__submitted { margin-right: auto; margin-left: 24px; }
+
+/* ---------- Generic blocks ---------- */
+.wcb-block { margin-bottom: 14px; }
+.wcb-block--inline { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; margin-bottom: 10px; }
+.wcb-block--contact { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+
+.wcb-intro { font-size: 13.5px; margin: 0 0 14px; }
+
+.wcb-section-heading {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 18px 0 8px;
+  color: #111;
+}
+
+.wcb-prompt { font-size: 13px; margin: 0 0 6px; }
+.wcb-note { font-size: 13px; margin: 8px 0 0; display: flex; gap: 8px; align-items: baseline; }
+
+/* Bordered "box" used for option groups and free text answers */
+.wcb-box {
+  border: 1.4px solid var(--wcb-border);
+  border-radius: 2px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.wcb-box__caption {
+  font-size: 11px;
+  color: var(--wcb-grey-caption);
+  margin: 0 0 6px;
+}
+.wcb-box--text { min-height: 46px; }
+.wcb-box__text { margin: 0; font-size: 13px; color: var(--wcb-blue); white-space: pre-wrap; }
+.wcb-box__text--empty { color: #888; font-style: italic; }
+
+/* Checkboxes */
+.wcb-checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+.wcb-checkbox-row:last-child { margin-bottom: 0; }
+.wcb-checkbox {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 13px;
+  max-width: 260px;
+}
+.wcb-checkbox__box {
+  width: 13px;
+  height: 13px;
+  border: 1.4px solid var(--wcb-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  margin-top: 2px;
+  background: #fff;
+}
+.wcb-checkbox__box.is-checked { background: #fff; }
+.wcb-checkbox__tick { width: 11px; height: 11px; stroke: var(--wcb-blue); stroke-width: 2.4; fill: none; }
+.wcb-checkbox__label { line-height: 1.3; }
+.wcb-checkbox-inline { display: inline-flex; align-items: baseline; gap: 6px; }
+.wcb-checkbox-inline__value {
+  border-bottom: 1px solid #444;
+  min-width: 90px;
+  padding: 0 4px;
+  font-size: 13px;
+  color: var(--wcb-blue);
+  display: inline-block;
+}
+.wcb-checkbox-inline__value--wide { min-width: 220px; }
+.wcb-checkbox-inline__caption { font-size: 10.5px; color: var(--wcb-grey-caption); }
+
+/* Underlined "value / label" fields, e.g. dates */
+.wcb-underline-field {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 130px;
+}
+.wcb-underline-field__value {
+  border-bottom: 1px solid #444;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: var(--wcb-blue);
+  padding-bottom: 2px;
+}
+.wcb-underline-field__label { font-size: 10.5px; color: var(--wcb-grey-caption); margin-top: 2px; }
+
+.wcb-inline-prefix { font-size: 13px; }
+.wcb-inline-mid { font-size: 13px; }
+
+/* Pain scale */
+.wcb-pain-scale { display: flex; gap: 10px; margin-top: 4px; }
+.wcb-pain-scale__num {
+  width: 26px;
+  height: 26px;
+  border: 1.4px solid var(--wcb-border);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.wcb-pain-scale__num.is-selected {
+  background: var(--wcb-blue);
+  color: #fff;
+  border-color: var(--wcb-blue);
+  font-weight: 700;
+}
+
+.wcb-exercise-list { margin: 0; padding-left: 20px; font-size: 13px; color: var(--wcb-blue); }
+.wcb-exercise-list li { margin-bottom: 3px; }
+
+.wcb-certification { font-size: 12px; line-height: 1.5; margin: 0 0 12px; text-align: justify; }
