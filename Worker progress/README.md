@@ -1,4 +1,4 @@
-# WCB Worker Progress Report — Assignment 2
+# WCB Worker Progress Report 
 
 A pixel-matched, data-driven rebuild of the WCB Manitoba **Worker Progress
 Report** PDF, built with **Pug, HTML and CSS only** — no Node.js, no build
@@ -21,6 +21,8 @@ python3 -m http.server 8000      # then open http://localhost:8000
 # or use VS Code's "Live Server" extension
 # or: php -S localhost:8000
 ```
+## DEMO LINK 
+https://drive.google.com/file/d/1TVaW-wrOLagPUXVLhhikYd1PkipFqMlc/view?usp=drive_link
 
 ## Using it
 
@@ -38,20 +40,24 @@ python3 -m http.server 8000      # then open http://localhost:8000
 
 ## Architecture
 
-```
-index.html              - shell: toolbar, #app mount point, script tags
-css/style.css            - the WCB visual language (boxes, checkboxes, header/footer, etc.)
-css/print.css            - @page A4, hides the toolbar, forces clean page breaks
-pug/mixins.pug           - low-level reusable Pug mixins (checkbox, box, underline field, page header/footer)
-pug/blocks.pug           - one mixin per content section (Return to Work, Recovery, Medical Treatment, ...)
-js/datasets.js            - the two simulated "backend" payloads
-js/pug-loader.js          - compiles .pug source into render functions, in the browser
-js/paginate.js            - measures every block's real height and lays out pages dynamically
-js/app.js                 - wires the dataset picker + print button + localStorage
-js/templates-inline.js    - AUTO-GENERATED fallback copy of the .pug source (see below)
-build/embed-templates.js  - regenerates templates-inline.js from the real .pug files
-assets/logo.jpeg          - WCB logo, as supplied
-```
+.
+├── index.html
+├── css/
+│   ├── style.css
+│   └── print.css
+├── pug/
+│   ├── mixins.pug
+│   └── blocks.pug
+├── js/
+│   ├── datasets.js
+│   ├── pug-loader.js
+│   ├── paginate.js
+│   ├── app.js
+│   └── templates-inline.js
+├── build/
+│   └── embed-templates.js
+└── assets/
+    └── logo.jpeg
 
 ### "Use Pug Template to render the page"
 
