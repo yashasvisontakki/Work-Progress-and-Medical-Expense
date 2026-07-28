@@ -1,131 +1,459 @@
-# WCB Worker Progress Report 
+# 📄 WCB Worker Progress Report
+### Browser-Only | Pug • HTML • CSS • JavaScript
 
-A pixel-matched, data-driven rebuild of the WCB Manitoba **Worker Progress
-Report** PDF, built with **Pug, HTML and CSS only** — no Node.js, no build
-step, no backend, and no manual data entry on screen.
+A fully front-end recreation of the **WCB Manitoba Worker Progress Report**, designed to closely match the original PDF while remaining completely data-driven.
 
-## How to run it
+The application renders real **Pug templates** directly in the browser, requiring **no Node.js, Express, backend, or build process** to run. All form data is supplied through simulated backend datasets, making the interface completely dynamic.
 
-**Just double-click `index.html`.** That's it — no server, no npm install,
-nothing to build. The only thing your browser needs is an internet
-connection, because it loads the (client-side) Pug template engine from a
-CDN so it can compile the real `.pug` files into HTML on the fly.
+---
 
-If you'd rather see the templates load straight from disk instead of the
-embedded fallback copy (see *Architecture* below for why that fallback
-exists), serve the folder with any static file server you like — none of
-these are Node:
+# ✨ Features
 
-```bash
-python3 -m http.server 8000      # then open http://localhost:8000
-# or use VS Code's "Live Server" extension
-# or: php -S localhost:8000
-```
-## DEMO LINK 
-https://drive.google.com/file/d/1TVaW-wrOLagPUXVLhhikYd1PkipFqMlc/view?usp=drive_link
+- 📑 Pixel-accurate recreation of the original Worker Progress Report
+- 🎨 Built using reusable Pug mixins
+- 📊 Dynamic rendering from simulated backend datasets
+- 🔄 One-click dataset switching
+- 💾 Remembers the selected dataset using Local Storage
+- 📄 Intelligent multi-page pagination
+- 🖨️ Print-ready A4 layout with repeating headers & footers
+- 🚀 Zero backend dependencies
+- 🌐 Runs entirely inside the browser
 
-## Snapshots
-1.![Uploading Screenshot 2026-07-28 152559.png…]()
+---
 
-## Using it
-
-- The blue toolbar at the top lets you **switch between two simulated
-  backend datasets** (`js/datasets.js`) — nothing is typed into the form by
-  hand, every field is driven entirely by whichever dataset object is
-  currently selected.
-- Your choice is remembered (`localStorage`) so **refreshing the page keeps
-  showing the same dataset** instead of resetting to the first one.
-- Edit either object in `js/datasets.js` (or add a third!) and reload the
-  page — the UI always reflects whatever is currently in that file.
-- **"Print / Save as PDF"** opens the browser print dialog, already
-  configured for standard A4 paper. Chrome/Edge → "Save as PDF" produces a
-  clean, correctly paginated document.
-
-## Structure 
+# 📁 Project Structure
 
 ```
+worker-progress-report/
+│
 ├── index.html
+│   └── Application entry point
+│
 ├── css/
 │   ├── style.css
+│   │   └── Screen styling
+│   │
 │   └── print.css
+│       └── Print & A4 layout
+│
 ├── pug/
 │   ├── mixins.pug
+│   │   └── Reusable UI components
+│   │
 │   └── blocks.pug
+│       └── Form section templates
+│
 ├── js/
 │   ├── datasets.js
+│   │   └── Simulated backend data
+│   │
 │   ├── pug-loader.js
+│   │   └── Browser-side Pug compiler
+│   │
 │   ├── paginate.js
+│   │   └── Dynamic page generation
+│   │
 │   ├── app.js
+│   │   └── Application controller
+│   │
 │   └── templates-inline.js
+│       └── Embedded template fallback
+│
 ├── build/
 │   └── embed-templates.js
+│
 └── assets/
     └── logo.jpeg
 ```
-### "Use Pug Template to render the page"
 
-`pug/mixins.pug` and `pug/blocks.pug` are the real, authored Pug source —
-open them to review the actual template code, mixins, conditionals and
-loops. There is no separate hand-written HTML version of the form; every
-box, checkbox and label you see on screen is produced by compiling this Pug
-source with the standalone browser build of the Pug engine
-(`jade.js` on the CDN — Pug's original package name; same engine, same
-`.compile()` API, still the officially-linked browser-standalone build).
+---
 
-### Why `templates-inline.js` exists (and why that's not cheating)
+# 🎥 Project Demo
 
-Browsers block `fetch()` of local files when a page is opened directly as
-`file://…` (no server) — that's a browser security rule, not something this
-project can opt out of. Since the assignment asks for a solution that
-**just works with plain HTML/CSS/Pug and no Node**, `pug-loader.js` tries
-`fetch("pug/mixins.pug")` / `fetch("pug/blocks.pug")` first, and only falls
-back to `js/templates-inline.js` — an exact, auto-generated string copy of
-those same two files — when that fetch is blocked. Either way, **the HTML on
-screen is produced by compiling genuine Pug source**, never hand-written
-markup. If you edit `pug/mixins.pug` or `pug/blocks.pug`, re-sync the copy
-with:
+📹 **Demo Video**
+
+https://drive.google.com/file/d/1TVaW-wrOLagPUXVLhhikYd1PkipFqMlc/view?usp=drive_link
+
+---
+
+# 📸 Project Preview
+
+Add screenshots here.
+
+```
+docs/
+├── screenshot-1.png
+├── screenshot-2.png
+└── screenshot-3.png
+```
+
+Example:
+
+```md
+![Home Screen](docs/screenshot-1.png)
+
+![Page Two](docs/screenshot-2.png)
+
+![Print Preview](docs/screenshot-3.png)
+```
+
+---
+
+# 🛠️ Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- Pug Template Engine
+- Browser DOM API
+- Local Storage API
+
+---
+
+# ▶️ Running the Project
+
+No installation.
+
+No npm.
+
+No backend.
+
+No build process.
+
+Simply open:
+
+```
+index.html
+```
+
+in any modern web browser.
+
+The application works immediately.
+
+---
+
+## Optional Static Server
+
+If you'd like the browser to load the Pug templates directly from the project folder rather than using the embedded fallback, serve the folder using any lightweight static server.
+
+Python
+
+```bash
+python3 -m http.server 8000
+```
+
+VS Code
+
+```
+Live Server Extension
+```
+
+PHP
+
+```bash
+php -S localhost:8000
+```
+
+---
+
+# 🎯 How It Works
+
+The application is completely data-driven.
+
+```
+Dataset
+      ↓
+Application Controller
+      ↓
+Pug Template Compiler
+      ↓
+Pagination Engine
+      ↓
+Rendered Pages
+```
+
+No user manually fills the form.
+
+Everything displayed on the page comes directly from the currently selected dataset, simulating data received from a backend API.
+
+---
+
+# 🔄 Dataset Switching
+
+The blue toolbar at the top allows switching between multiple simulated backend datasets.
+
+Included datasets:
+
+```
+Dataset 1
+Dataset 2
+```
+
+Changing datasets instantly re-renders the complete report without refreshing the page.
+
+The selected dataset is automatically saved in Local Storage, so reopening or refreshing the page restores the previous selection.
+
+To modify the displayed information, simply edit:
+
+```
+js/datasets.js
+```
+
+or add another dataset object.
+
+No HTML or template changes are required.
+
+---
+
+# 🧩 Why Real Pug Templates?
+
+The project requirement specifies that the page must be rendered using **Pug** rather than manually written HTML.
+
+The original templates are located inside:
+
+```
+pug/
+├── mixins.pug
+└── blocks.pug
+```
+
+These contain the actual authored source, including:
+
+- Mixins
+- Loops
+- Conditions
+- Reusable Components
+
+Every element visible in the application is generated by compiling these Pug templates directly in the browser.
+
+There is **no duplicate handwritten HTML implementation**.
+
+---
+
+# 💡 Why Does `templates-inline.js` Exist?
+
+When opening a project directly using
+
+```
+file://
+```
+
+modern browsers block loading local template files with `fetch()` for security reasons.
+
+To ensure the application works immediately after opening `index.html`, the project includes:
+
+```
+templates-inline.js
+```
+
+This file contains an automatically generated copy of the original Pug templates.
+
+Application startup process:
+
+```
+Try loading:
+
+pug/mixins.pug
+pug/blocks.pug
+
+        │
+        ▼
+
+Success?
+        │
+ ┌──────┴──────┐
+ │             │
+Yes           No
+ │             │
+ ▼             ▼
+
+Compile      Use Embedded Copy
+Real Pug      (templates-inline.js)
+```
+
+Regardless of which path is used, the browser still compiles genuine Pug source to generate the HTML.
+
+---
+
+# 🔨 Updating Embedded Templates
+
+After modifying the Pug files, regenerate the embedded template copy using:
 
 ```bash
 node build/embed-templates.js
 ```
 
-(plain Node + `fs`, no packages installed — this script is a convenience,
-not a requirement to run the app itself.)
+This script simply synchronizes the templates.
 
-### Code modularity & reuse (mixins)
+It is **not required** for running the application.
 
-- `mixins.pug` defines the shared visual primitives once: `checkbox`,
-  `checkboxRow`, `optionBox`, `textBox`, `underlineField`, `sectionHeading`,
-  `pageHeader`, `pageFooter`.
-- `blocks.pug` composes those primitives into one mixin per form section
-  (`blockReturnToWork`, `blockRecovery`, `blockMedicalTreatment`, …) — every
-  section reuses the same checkbox/box/underline styling instead of
-  redefining it.
-- `pageHeader`/`pageFooter` are called once per printed page, so the
-  Claim No., logo and address block never have to be duplicated by hand.
+---
 
-### Dynamic pagination & the footer
+# ♻️ Reusable Pug Architecture
 
-`js/paginate.js` renders every content block into an offscreen A4-sized
-element, measures each block's real height with the real CSS applied, and
-greedily packs blocks onto pages until the next block would overflow the
-usable page height — then starts a new page. Only once the *actual* number
-of pages for the current dataset is known does it stamp
-`Page {n} of {total}` into each page's footer. That's why:
+The UI is built from reusable mixins to eliminate duplicated markup.
 
-- **Dataset 1** (short answers, closely matching the source PDF) lays out
-  on **3 pages**, just like the original.
-- **Dataset 2** (longer free-text answers, a populated exercise list, an
-  active medical-treatment schedule) is free to spread across **more
-  pages** without the footer ever showing the wrong page count.
+## Shared Components
 
-`print.css` adds `break-inside: avoid` to every box/checkbox group so a
-question is never split awkwardly across a page break in the printed PDF.
+- `checkbox`
+- `checkboxRow`
+- `optionBox`
+- `textBox`
+- `underlineField`
+- `sectionHeading`
+- `pageHeader`
+- `pageFooter`
 
-## Data flow
+---
 
-`datasets.js` → `app.js` (picks the selected dataset) → `paginate.js`
-(lays out + renders pages) → `pug-loader.js` (compiles the Pug mixins that
-paginate.js calls) → DOM. There is no form input anywhere in this chain —
-everything the page shows comes from the selected dataset object, simulating
-what would otherwise be a backend API response.
+## Form Sections
+
+Each report section is implemented as an independent mixin.
+
+Examples include:
+
+- Return To Work
+- Recovery
+- Medical Treatment
+- Exercise Program
+- Functional Restrictions
+- Recommendations
+
+This modular design keeps the templates clean, reusable, and easy to maintain.
+
+---
+
+# 📄 Smart Pagination Engine
+
+Unlike traditional HTML pages, this project calculates page breaks dynamically.
+
+The pagination engine:
+
+1. Renders content into an invisible A4 container.
+2. Measures the actual height of every section.
+3. Determines where each page should end.
+4. Creates new pages only when necessary.
+5. Updates every footer with the correct page number.
+
+Example:
+
+```
+Dataset 1
+──────────
+Page 1
+Page 2
+Page 3
+
+Dataset 2
+──────────
+Page 1
+Page 2
+Page 3
+Page 4
+Page 5
+```
+
+Regardless of content length, the footer always displays the correct page count.
+
+---
+
+# 🖨️ Print & PDF Export
+
+The application has been optimized for browser printing.
+
+Simply click:
+
+```
+Print / Save as PDF
+```
+
+or press
+
+```
+Ctrl + P
+```
+
+Features include:
+
+- A4 page size
+- Correct page numbering
+- Repeating headers
+- Repeating footers
+- Clean page breaks
+- Prevents checkboxes and grouped fields from splitting across pages
+
+Everything is implemented using pure CSS without external libraries.
+
+---
+
+# 📊 Data Flow
+
+```
+datasets.js
+      │
+      ▼
+app.js
+      │
+      ▼
+paginate.js
+      │
+      ▼
+pug-loader.js
+      │
+      ▼
+Compiled Pug Templates
+      │
+      ▼
+Browser DOM
+```
+
+The application contains no editable form inputs.
+
+Every field displayed on screen originates from the selected dataset, accurately simulating a backend-driven application.
+
+---
+
+# 🚀 Project Highlights
+
+✅ Browser-Only Rendering
+
+✅ Pure Front-End Architecture
+
+✅ Real Pug Templates
+
+✅ Reusable Mixins
+
+✅ Dynamic Dataset Rendering
+
+✅ Local Storage Persistence
+
+✅ Automatic Page Pagination
+
+✅ Print-Optimized Layout
+
+✅ No Backend Required
+
+✅ No Build Process Needed
+
+✅ Clean Modular Codebase
+
+✅ Easy to Extend & Maintain
+
+---
+
+# 📝 Notes
+
+- Runs entirely in the browser.
+- No frameworks are required.
+- No Node.js or Express at runtime.
+- Uses simulated backend datasets.
+- Generates HTML by compiling real Pug templates.
+- Can be deployed to any static hosting platform such as GitHub Pages, Netlify, or Vercel.
+
+---
+
+## 👨‍💻 Author
+
+**Developed as part of the WCB Worker Progress Report assignment**
+
+Designed using **HTML, CSS, JavaScript, and Pug** with a focus on clean architecture, reusable components, dynamic rendering, and browser-only execution.
