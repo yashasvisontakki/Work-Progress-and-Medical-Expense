@@ -3,7 +3,7 @@
 No Node.js server, no Express — this runs entirely in the browser as
 static files.
 
-## Files
+## Project Structure
 
 ```
 wcb-form-static/
@@ -22,6 +22,8 @@ wcb-form-static/
     │   └── dataset2.js       # Simulated backend record #2 (different claim/values)
     └── main.js                # Wires data → template, handles the dataset switcher
 ```
+## Demo link
+https://drive.google.com/file/d/1m_Bm4Wm_7X0IyT0K9SyHQC5nOToaRi41/view?usp=drive_link
 
 ## Why there's a `.pug` folder AND a `pug-templates.js` file
 
@@ -83,3 +85,5 @@ automatically, so the footer stays correctly placed regardless of how
 many pages a given dataset's tables end up spanning. This uses plain
 CSS only — no external library or CDN dependency, so nothing can
 interfere with the normal on-screen view.
+
+
