@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical &amp; Travel Expense Request</title>
+
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <!--
+    Everything below is rendered by js/main.js calling the compiled
+    Pug template (js/pug-templates.js) with one of the two simulated
+    "backend" datasets (js/data/dataset1.js / dataset2.js).
+  -->
+  <div id="app"></div>
+
+  <!-- Simulated backend data (two datasets, switchable in the UI) -->
+  <script src="./js/data/dataset1.js"></script>
+  <script src="./js/data/dataset2.js"></script>
+
+  <!-- Pug template, precompiled to a plain JS render function -->
+  <script src="./js/pug-templates.js"></script>
+
+  <!-- Wires the data to the template and handles the dataset switcher -->
+  <script src="./js/main.js"></script>
+</body>
+</html>
