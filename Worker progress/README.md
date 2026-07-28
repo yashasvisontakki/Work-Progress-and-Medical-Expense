@@ -78,26 +78,11 @@ https://drive.google.com/file/d/1TVaW-wrOLagPUXVLhhikYd1PkipFqMlc/view?usp=drive
 
 # 📸 Project Preview
 
-Add screenshots here.
-
-```
-docs/
-├── screenshot-1.png
-├── screenshot-2.png
-└── screenshot-3.png
-```
-
-Example:
-
-```md
-![Home Screen](docs/screenshot-1.png)
-
-![Page Two](docs/screenshot-2.png)
-
-![Print Preview](docs/screenshot-3.png)
-```
-
----
+# Snapshots 
+<img width="2806" height="1470" alt="Screenshot 2026-07-28 152050" src="https://github.com/user-attachments/assets/3df1abd3-0556-4fb2-8df5-80dc5b1a2069" />
+<img width="2056" height="1344" alt="Screenshot 2026-07-28 152414" src="https://github.com/user-attachments/assets/9eae3063-67c9-42dd-a7a1-6b56efafa775" />
+<img width="2708" height="1446" alt="Screenshot 2026-07-28 152436" src="https://github.com/user-attachments/assets/21911e49-12f7-4926-84ed-8c27e8e2804c" />
+<img width="2606" height="1430" alt="Screenshot 2026-07-28 152449" src="https://github.com/user-attachments/assets/760505df-4aff-48f4-80a2-831059d4deb7" />
 
 # 🛠️ Technologies Used
 
