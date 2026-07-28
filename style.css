@@ -1,0 +1,294 @@
+/* =======================================================================
+   style.css
+   -----------------------------------------------------------------------
+   Two concerns are handled here on purpose:
+   1) Visual layout that mimics the source PDF (letterhead, tables,
+      footer) as closely as possible.
+   2) Print pagination for standard A4 paper using plain CSS only
+      (@page + position: fixed) — no external library or CDN
+      dependency, so nothing can hijack or blank out the on-screen
+      view. See the PRINT / A4 PAGINATION section near the bottom.
+   ======================================================================= */
+
+:root {
+  --wcb-blue: #1c3f6e;
+  --wcb-blue-light: #2b5b96;
+  --border-color: #222;
+  --text-color: #1a1a1a;
+  --page-width: 210mm;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Georgia", "Times New Roman", serif;
+  color: var(--text-color);
+  margin: 0;
+  background: #e9e9e9;
+}
+
+/* ---------------------------------------------------------------------
+   On-screen dataset switcher / print button — never printed.
+   --------------------------------------------------------------------- */
+.dataset-switcher {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--wcb-blue);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dataset-switcher a {
+  color: #fff;
+  background: var(--wcb-blue-light);
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.dataset-switcher a.active {
+  background: #fff;
+  color: var(--wcb-blue);
+  font-weight: bold;
+}
+
+.dataset-switcher button {
+  margin-left: auto;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--wcb-blue);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------
+   Page wrapper — screen preview shows it as a paper sheet;
+   print rules below strip this chrome away.
+   --------------------------------------------------------------------- */
+.page-wrapper {
+  width: var(--page-width);
+  margin: 24px auto;
+  background: #fff;
+  padding: 15mm;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------------
+   Header: logo, org contact block, title + claim number box
+   --------------------------------------------------------------------- */
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.header-logo img {
+  width: 150px;
+  height: auto;
+}
+
+.header-contact {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #333;
+  flex: 1;
+}
+
+.header-title-block {
+  text-align: left;
+  max-width: 230px;
+}
+
+.doc-title {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.claim-box {
+  border: 1px solid var(--border-color);
+  padding: 4px 8px;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------------------------
+   Request line + section titles
+   --------------------------------------------------------------------- */
+.request-line {
+  margin: 0 0 18px 0;
+}
+
+.form-section {
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+  font-family: Georgia, serif;
+}
+
+.section-marker {
+  color: var(--wcb-blue);
+}
+
+.section-intro {
+  font-size: 11.5px;
+  margin: 0 0 8px 0;
+}
+
+/* ---------------------------------------------------------------------
+   Data tables — thin black borders, header row, blue-ish data text
+   like the source PDF's link-styled cell values.
+   --------------------------------------------------------------------- */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  table-layout: fixed;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid var(--border-color);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+.data-table th {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background: #fff;
+}
+
+.data-table td {
+  color: var(--wcb-blue-light);
+}
+
+.data-table td.empty-row {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Keep header row + rows together across a page break where possible */
+.data-table thead {
+  display: table-header-group;
+}
+
+.data-table tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.form-section {
+  break-inside: avoid-page;
+}
+
+/* ---------------------------------------------------------------------
+   Privacy line
+   --------------------------------------------------------------------- */
+.section-divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0 12px 0;
+}
+
+.privacy-line {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.privacy-line a {
+  color: var(--wcb-blue-light);
+}
+
+/* ---------------------------------------------------------------------
+   Footer (on-screen preview fallback — the print version is produced
+   by the @page running-element rules further down).
+   --------------------------------------------------------------------- */
+.doc-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  margin-top: 24px;
+  border-top: 1px solid #ccc;
+  padding-top: 6px;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+/* =======================================================================
+   PRINT / A4 PAGINATION
+   -----------------------------------------------------------------------
+   Plain CSS only — no external library. `position: fixed` on the
+   footer is what makes it reprint on every physical page: standard
+   browsers (Chrome, Edge, Firefox) repeat fixed-position elements on
+   each printed page automatically. The extra bottom @page margin
+   below reserves room for it so table rows never run underneath it,
+   regardless of how many rows a given dataset produces.
+   ======================================================================= */
+@media print {
+  .no-print,
+  .dataset-switcher {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .page-wrapper {
+    box-shadow: none;
+    margin: 0;
+    width: auto;
+    padding: 0;
+  }
+
+  .doc-footer {
+    position: fixed;
+    left: 15mm;
+    right: 15mm;
+    bottom: 0;
+    margin-top: 0;
+  }
+}
+
+@page {
+  size: A4;
+  /* Extra bottom margin reserves room for the fixed footer so table
+     content never overlaps it, regardless of how many rows a given
+     dataset has. */
+  margin: 18mm 15mm 22mm 15mm;
+}
+
+

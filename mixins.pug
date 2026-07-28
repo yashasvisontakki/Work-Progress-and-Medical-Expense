@@ -1,0 +1,72 @@
+//-
+  mixins.pug
+  ---------------------------------------------------------------------
+  Shared, reusable Pug mixins.
+  These are intentionally generic (not tied to "expense request" only)
+  so the SAME mixins can be reused by other WCB forms later — that's
+  the "reusable between forms" half of the requirement. The
+  "reusable within a form" half comes from calling +dataTable() once
+  per section instead of writing six near-identical tables by hand.
+  ---------------------------------------------------------------------
+
+//- Generic document header: logo, mailing/contact block, title + claim box.
+//- Reused by every WCB form that shares this letterhead layout.
+mixin docHeader(orgAddressLines, docTitle, claimLabel, claimValue)
+  header.doc-header
+    .header-logo
+      img(src="./images/logo.jpeg" alt="Workers Compensation Board of Manitoba logo")
+    .header-contact
+      each line in orgAddressLines
+        div= line
+    .header-title-block
+      h1.doc-title= docTitle
+      .claim-box
+        span.claim-label= claimLabel + " "
+        span.claim-value= claimValue
+
+//- Generic section heading, with an optional footnote-style marker (e.g. "*")
+mixin sectionTitle(title, marker)
+  h2.section-title
+    = title
+    if marker
+      sup.section-marker= marker
+
+//- Generic, reusable data table.
+//- columns: [{ label: 'Drug Name', key: 'drugName' }, ...]
+//- rows:    [{ drugName: 'Naproxen', ... }, ...]
+//- Handles the empty-data case automatically so callers never need to
+//- branch on "if rows.length" themselves.
+mixin dataTable(columns, rows)
+  table.data-table
+    thead
+      tr
+        each col in columns
+          th= col.label
+    tbody
+      if rows && rows.length
+        each row in rows
+          tr
+            each col in columns
+              td= row[col.key] || ""
+      else
+        tr
+          td.empty-row(colspan=columns.length) No records submitted for this section.
+
+//- A full section = heading + intro copy (optional) + table.
+//- This is the piece that gets reused six times on this form alone.
+mixin expenseSection(title, marker, introText, columns, rows)
+  section.form-section
+    +sectionTitle(title, marker)
+    if introText
+      p.section-intro= introText
+    +dataTable(columns, rows)
+
+//- Repeating page footer. On print, style.css switches this to
+//- `position: fixed`, which standard browsers repeat on every
+//- physical A4 page automatically — no external library needed.
+mixin pageFooter(workerAppId, submitted)
+  footer.doc-footer
+    .footer-left
+      | Worker App ID: #{workerAppId}
+    .footer-right
+      | Submitted: #{submitted}

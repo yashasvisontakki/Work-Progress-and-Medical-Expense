@@ -1,0 +1,141 @@
+//-
+  expense-form.pug
+  ---------------------------------------------------------------------
+  Main form template. This is a FRAGMENT (no doctype/html/head/body) —
+  it is precompiled with the Pug compiler into a plain JavaScript
+  render function (see js/pug-templates.js) and that function is what
+  actually runs in the browser. No Node.js / Express is needed at
+  runtime; Pug is only used as the templating language, exactly as
+  the assignment asks for.
+
+  Locals expected:
+    claim          - the simulated "backend record" object (see js/data/*.js)
+    activeDataset  - '1' or '2', used only to highlight the active
+                     button in the on-screen (non-printed) switcher
+  ---------------------------------------------------------------------
+
+include mixins
+
+//- On-screen only: switches which simulated dataset is rendered.
+//- renderDataset() is a plain JS function defined in js/main.js —
+//- no page reload, no server round-trip, just a re-render with a
+//- different data object. Hidden automatically when printed (.no-print).
+.dataset-switcher.no-print
+  span Simulated backend record:
+  a(
+    href="javascript:void(0)"
+    onclick="renderDataset('1')"
+    class=activeDataset === '1' ? 'active' : ''
+  ) Dataset 1 (Madeleine Willson)
+  a(
+    href="javascript:void(0)"
+    onclick="renderDataset('2')"
+    class=activeDataset === '2' ? 'active' : ''
+  ) Dataset 2 (Devesh Kumar)
+  button#print-btn(type="button" onclick="window.print()") Print / Save as PDF
+
+.page-wrapper
+  +docHeader(
+    ["333 Broadway", "Winnipeg, MB R3C 4W3", "Phone: (204) 954-4321", "Toll Free: 1-855-954-4321", "wcb.mb.ca"],
+    "Medical & Travel Expense Request",
+    "Claim No.",
+    claim.claimNo
+  )
+
+  p.request-line
+    strong= claim.workerName
+    |  requested reimbursement for the following medical and/or travel expenses:
+
+  +expenseSection(
+    "Prescription Drugs",
+    null,
+    null,
+    [
+      { label: "Drug Name", key: "drugName" },
+      { label: "Prescription Date", key: "prescriptionDate" },
+      { label: "Date Purchased", key: "datePurchased" },
+      { label: "Healthcare Provider Name", key: "providerName" },
+      { label: "Paid Amount", key: "paidAmount" }
+    ],
+    claim.prescriptionDrugs
+  )
+
+  +expenseSection(
+    "Over-the-Counter Drugs",
+    null,
+    null,
+    [
+      { label: "Drug Name", key: "drugName" },
+      { label: "Date Purchased", key: "datePurchased" },
+      { label: "Paid Amount", key: "paidAmount" },
+      { label: "Seller's Name", key: "sellerName" },
+      { label: "Reason for Purchasing", key: "reason" }
+    ],
+    claim.otcDrugs
+  )
+
+  +expenseSection(
+    "Bandages, Braces or Other Medical Supplies",
+    null,
+    null,
+    [
+      { label: "Item Purchased", key: "itemPurchased" },
+      { label: "Date Purchased", key: "datePurchased" },
+      { label: "Was this Prescribed?", key: "wasPrescribed" },
+      { label: "Healthcare Provider Name", key: "providerName" },
+      { label: "Paid Amount", key: "paidAmount" },
+      { label: "Seller's Name", key: "sellerName" }
+    ],
+    claim.medicalSupplies
+  )
+
+  +expenseSection(
+    "Parking for Medical Appointments",
+    null,
+    null,
+    [
+      { label: "Address of Healthcare Provider/Medical Facility", key: "providerAddress" },
+      { label: "Date", key: "date" },
+      { label: "Paid Amount", key: "paidAmount" },
+      { label: "Meter Used?", key: "meterUsed" },
+      { label: "Meter Number", key: "meterNumber" }
+    ],
+    claim.parking
+  )
+
+  +expenseSection(
+    "Mileage to Medical Appointments",
+    null,
+    "The WCB will generally reimburse only those transportation costs which are in excess of costs that would be incurred by the worker while travelling to and from work.",
+    [
+      { label: "Appointment Date", key: "appointmentDate" },
+      { label: "Address of Healthcare Provider/Medical Facility", key: "providerAddress" },
+      { label: "Address of Workplace", key: "workplaceAddress" },
+      { label: "Number of km (Round Trip)", key: "km" }
+    ],
+    claim.mileage
+  )
+
+  +expenseSection(
+    "Bus or Taxi Fare for Medical Appointments",
+    "*",
+    "*Note: Pre-approval is required from your WCB representative to claim taxi fare(s).",
+    [
+      { label: "Appointment Date", key: "appointmentDate" },
+      { label: "Address of Starting Point", key: "startAddress" },
+      { label: "Address of Healthcare Provider/Medical Facility", key: "providerAddress" },
+      { label: "Bus or Taxi (indicate one)", key: "fareType" },
+      { label: "Total Fare Paid", key: "totalFare" }
+    ],
+    claim.busTaxi
+  )
+
+  hr.section-divider
+
+  p.privacy-line
+    input(type="checkbox" checked=claim.privacyAcknowledged disabled)
+    |  I understand that the
+    a(href="#") &nbsp;Privacy Notice&nbsp;
+    |  applies to the personal information collected in this document.
+
+  +pageFooter(claim.workerAppId, claim.submitted)
