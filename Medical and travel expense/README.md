@@ -61,7 +61,7 @@ wcb-form-static/
 
 📹 **Demo Video**
 
-https://drive.google.com/file/d/1m_Bm4Wm_7X0IyT0K9SyHQC5nOToaRi41/view?usp=drive_link
+https://drive.google.com/file/d/1m_Bm4Wm_7X0IyT0K9SyHQC5nOToaRi41/view?usp=sharing
 
 ---
 # Snapshots
